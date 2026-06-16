@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#2563eb" />
+  <title>首爾行程更版範本</title>
+  <style>
+    :root{--bg:#f6f7fb;--card:#fff;--text:#172033;--muted:#5f6b7a;--line:#e7eaf0;--blue:#2563eb;--green:#16a34a;--shadow:0 10px 28px rgba(20,29,54,.08);--radius:18px}
+    *{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
+    header{position:sticky;top:0;z-index:10;background:linear-gradient(135deg,#1d4ed8,#38bdf8);color:white;padding:14px;box-shadow:0 2px 18px rgba(0,0,0,.12)}
+    h1{font-size:20px;margin:0;font-weight:850}.subtitle{font-size:12px;opacity:.92;margin-top:4px}.nav{display:flex;gap:8px;overflow-x:auto;margin-top:10px}.nav a,.nav button{flex:0 0 auto;border:1px solid rgba(255,255,255,.35);color:white;text-decoration:none;background:rgba(255,255,255,.16);padding:8px 10px;border-radius:999px;font-size:13px;font-weight:750;font-family:inherit}
+    main{max-width:900px;margin:0 auto;padding:14px 12px 80px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin:12px 0;box-shadow:var(--shadow)}
+    h2{font-size:18px;margin:0 0 8px}.small{font-size:13px;color:var(--muted)}textarea{width:100%;min-height:62vh;border:1px solid #cbd5e1;border-radius:14px;padding:12px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;line-height:1.55;background:#fbfdff;color:#111827;white-space:pre;overflow:auto}
+    .buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}.btn{appearance:none;border:0;text-align:center;text-decoration:none;border-radius:13px;padding:12px 10px;font-weight:850;font-size:14px;color:#fff;background:var(--blue);cursor:pointer;font-family:inherit}.btn.copy{background:var(--green)}.btn.gray{background:#475569}.notice{background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;padding:12px;border-radius:14px;margin:10px 0;font-size:14px}.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 14px;border-radius:999px;font-weight:800;opacity:0;pointer-events:none;transition:.2s;z-index:99}.toast.show{opacity:1;bottom:28px}
+    @media (min-width:720px){.buttons{grid-template-columns:repeat(3,1fr)}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>首爾行程網站｜更版範本</h1>
+  <div class="subtitle">版本：2026-06-16 v1.0｜手機複製用｜不含敏感資料</div>
+  <div class="nav"><a href="./index.html">← 回行程首頁</a><button onclick="copyTemplate()">複製範本</button></div>
+</header>
+<main>
+  <div class="notice"><b>使用方式：</b>先按「複製範本」，貼到 ChatGPT 或備忘錄後直接修改。韓文地址、交通、Naver / Kakao 搜尋字不確定可以留空，我會幫你補。</div>
+  <section class="card">
+    <h2>簡化更版範本</h2>
+    <p class="small">你可以直接在下面文字框改，也可以先複製到手機備忘錄再改。</p>
+    <div class="buttons"><button class="btn copy" onclick="copyTemplate()">複製範本</button><button class="btn gray" onclick="resetTemplate()">還原範本</button><a class="btn" href="./index.html">回首頁</a></div>
+    <textarea id="templateText" spellcheck="false"></textarea>
+  </section>
+</main>
+<div class="toast" id="toast">已複製</div>
+<script>
+const TEMPLATE = `# 首爾行程網站更版需求
+
+版本：
+是否直接 commit 到 GitHub：是 / 否
+
+## 要新增
+1. 
+2. 
+
+## 要修改
+1. 
+2. 
+
+## 要刪除
+1. 
+2. 
+
+## 請幫我補
+[ ] 韓文名稱
+[ ] 韓文地址
+[ ] Naver Map 搜尋字
+[ ] KakaoMap 搜尋字
+[ ] 地鐵路線
+[ ] 叫車方案
+[ ] 集合點
+[ ] 親子備案
+[ ] 下雨備案
+[ ] 行程不要太趕
+
+## 其他注意事項
+- 不要放護照、電話、房號、訂房姓名等敏感資料
+- 保留 4 大 3 小分車提醒
+- 保留 Naver Map / KakaoMap / 開 Uber App / 複製地址
+- 不要恢復 Uber 網頁備援按鈕
+
+## 可以直接貼給你的說法
+請幫我依照以上內容更版首爾行程網站。如果地址、交通、營業時間有疑問，請以最新公開資訊查證後再更新；如果有不適合小孩或行程太趕的地方，請幫我調整成親子友善版本。`;
+function resetTemplate(){document.getElementById('templateText').value=TEMPLATE; showToast('已還原範本')}
+function copyTemplate(){const text=document.getElementById('templateText').value || TEMPLATE; if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>showToast('已複製範本')).catch(()=>fallbackCopy(text));}else fallbackCopy(text)}
+function fallbackCopy(text){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();showToast('已複製範本')}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+resetTemplate();
+</script>
+</body>
+</html>
