@@ -1,6 +1,6 @@
 const siteInfo = {
-  version: '2026-06-26 v3.0',
-  label: '完整交通操作卡重建版（含醬蟹＋採買優化）',
+  version: '2026-06-26 v3.1',
+  label: '交通細節升級版（含完整轉乘＋費用）',
   title: '首爾親子行程｜手機交通卡',
   subtitle: '4大3小｜住宿：弘大／麻浦',
   footerNote: '交通與費用為估算，實際以 Naver Map / 現場為準。'
@@ -22,7 +22,7 @@ const places = {
     addr: 'Hongik Univ. Station',
     lat: 37.55719,
     lng: 126.92538,
-    meet: '弘大入口站出口'
+    meet: '出口'
   },
 
   incheonT2: {
@@ -35,7 +35,7 @@ const places = {
   },
 
   day1Food: {
-    name: '弘大補給（大創 / Olive Young）',
+    name: '弘大補給',
     ko: '홍대',
     addr: '弘大商圈',
     lat: 37.556,
@@ -62,12 +62,12 @@ const places = {
   },
 
   waDaeGang: {
-    name: '大瓦房醬蟹（新世界）',
+    name: '大瓦房醬蟹（主）',
     ko: '대가방',
     addr: '新世界百貨餐廳樓層',
     lat: 37.56014,
     lng: 126.98040,
-    meet: '餐廳門口'
+    meet: '餐廳'
   },
 
   udari: {
@@ -112,7 +112,7 @@ const places = {
     addr: 'DDP周邊',
     google: 'https://maps.app.goo.gl/yFvTRT8qF5hmxeTW8',
     noUber: true,
-    meet: 'Google Maps定位'
+    meet: 'Google定位'
   },
 
   lotteWorld: {
@@ -125,12 +125,12 @@ const places = {
   },
 
   lotteMall: {
-    name: '樂天世界 Mall（含B1餐飲）',
+    name: '樂天世界 Mall',
     ko: '롯데월드몰',
     addr: '서울 송파구 올림픽로 300',
     lat: 37.51375,
     lng: 127.10444,
-    meet: 'B1餐飲區'
+    meet: 'B1餐飲'
   },
 
   seoulStationLotteMart: {
@@ -139,20 +139,19 @@ const places = {
     addr: '서울 중구 한강대로 405',
     lat: 37.5551,
     lng: 126.9723,
-    meet: '超市入口'
+    meet: '入口'
   },
 
   crabWorld: {
     name: '花蟹世界',
     ko: '꽃게나라',
-    addr: '（依 Google Maps）',
+    addr: 'Google Maps定位',
     google: 'https://maps.app.goo.gl/MLtG4quMSr8ktWqeA',
     meet: '店門口'
   }
 };
 
 const days = [
-
 {
   day: 'Day 1｜抵達弘大',
   summary: '機場 → 弘大',
@@ -160,78 +159,103 @@ const days = [
     {
       cls: 'airport',
       to: 'hotel',
-      title: '✈️ 仁川 T2 → 弘大',
-      metro: 'AREX直達約55–60分，0轉乘',
-      taxi: 'Van優先，7人建議大型車＋行李分車'
-    },
-    {
-      cls: 'food',
-      to: 'day1Food',
-      title: '🛍 弘大補給',
-      metro: '步行弘大商圈',
-      taxi: '短距離'
+      title: '✈️ 仁川 → 弘大',
+      metro: 'AREX直達 55–60分',
+      metroDetail: {
+        route: '仁川T2 → 弘大入口站',
+        transfer: 0,
+        time: '55–60分',
+        fare: '₩4,500–₩9,500'
+      },
+      taxiDetail: {
+        time: '50–70分',
+        cost: '₩60,000–₩90,000',
+        note: '7人建議Van'
+      }
     }
   ]
 },
 
 {
   day: 'Day 2｜聖水＋明洞＋醬蟹',
-  summary: '聖水 → 明洞 → 醬蟹晚餐',
+  summary: '聖水 → 明洞 → 醬蟹',
+
   cards: [
     {
       cls: '',
       to: 'standardBread',
-      title: '☕ 聖水 Standard Bread',
-      metro: '弘大 → 聖水約25–35分（0轉乘）',
-      taxi: '地鐵優先'
+      title: '☕ 弘大 → 聖水',
+
+      metro: '2號線直達（0轉乘）',
+      metroDetail: {
+        route: '弘大入口站 → 聖水站',
+        transfer: 0,
+        time: '25–35分',
+        fare: '₩1,400–₩1,800'
+      },
+      taxiDetail: {
+        time: '20–30分',
+        cost: '₩15,000–₩25,000'
+      }
     },
+
     {
       cls: '',
       to: 'myeongdongShinsegae',
-      title: '🏙 明洞／新世界百貨',
-      metro: '聖水 → 明洞約20–30分',
-      taxi: '易塞車，不建議'
+      title: '🏙 聖水 → 明洞',
+
+      metro: '2號線直達（0轉乘）',
+      metroDetail: {
+        route: '聖水站 → 乙支路入口站',
+        transfer: 0,
+        time: '20–30分',
+        fare: '₩1,400–₩1,800'
+      },
+      taxiDetail: {
+        time: '25–40分',
+        cost: '₩20,000–₩35,000'
+      }
     },
+
     {
       cls: 'food',
       to: 'waDaeGang',
       title: '🦀 大瓦房醬蟹（主）',
-      metro: '新世界百貨內',
-      taxi: '備案：烏達里醬蟹'
+
+      metro: '步行5–8分',
+      metroDetail: {
+        route: '乙支路入口站 → 新世界百貨',
+        transfer: 0,
+        time: '5–8分',
+        fare: '₩0'
+      },
+      taxiDetail: {
+        note: '明洞不建議叫車'
+      }
     }
   ]
 },
 
 {
   day: 'Day 3｜東大門＋採買',
-  summary: '玩具街 → 廣藏 → NYUNYU → Mango Busy',
+  summary: '玩具街 → 廣藏 → NYUNYU → Mango Busy → 樂天超市',
+
   cards: [
-    {
-      cls: '',
-      to: 'dongA',
-      title: '🧸 玩具街'
-    },
-    {
-      cls: '',
-      to: 'gwangjang',
-      title: '🍜 廣藏市場'
-    },
-    {
-      cls: '',
-      to: 'nyunyu',
-      title: '🛍 NYUNYU'
-    },
-    {
-      cls: 'food',
-      to: 'mangoBusy',
-      title: '🛍 Mango Busy'
-    },
+    { cls: '', to: 'dongA', title: '🧸 玩具街' },
+    { cls: '', to: 'gwangjang', title: '🍜 廣藏市場' },
+    { cls: '', to: 'nyunyu', title: '🛍 NYUNYU' },
+    { cls: 'food', to: 'mangoBusy', title: '🛍 Mango Busy' },
     {
       cls: 'food',
       to: 'seoulStationLotteMart',
-      title: '🛒 首爾站樂天超市（零食採買）',
-      metro: '東大門 → 首爾站約10–15分',
-      taxi: '地鐵最穩定'
+      title: '🛒 首爾站樂天超市',
+      metro: '東大門 → 首爾站 10–15分',
+      metroDetail: {
+        route: '東大門 → 首爾站',
+        transfer: 0,
+        time: '10–15分',
+        fare: '₩1,400–₩1,800'
+      }
     }
   ]
 },
@@ -240,31 +264,35 @@ const days = [
   day: 'Day 4｜樂天世界',
   summary: '全天樂園',
   cards: [
-    {
-      cls: 'long',
-      to: 'lotteWorld',
-      title: '🎢 樂天世界'
-    },
+    { cls: 'long', to: 'lotteWorld', title: '🎢 樂天世界' },
     {
       cls: 'food',
       to: 'lotteMall',
-      title: '🍽 B1可吃大瓦房醬蟹（備註）'
+      title: '🍽 B1醬蟹備註'
     }
   ]
 },
 
 {
   day: 'Day 5｜返台',
-  summary: '弘大 → 機場 CI161 12:45',
+  summary: 'CI161 12:45 → 機場',
   cards: [
     {
       cls: 'airport',
       to: 'incheonT2',
-      title: '✈️ 前往仁川機場',
-      metro: 'AREX約55–60分，建議09:30出發',
-      taxi: 'Van優先'
+      title: '✈️ 弘大 → 機場',
+      metro: 'AREX 55–60分',
+      metroDetail: {
+        route: '弘大入口站 → 仁川T2',
+        transfer: 0,
+        time: '55–60分',
+        fare: '₩4,500–₩9,500'
+      },
+      taxiDetail: {
+        time: '50–70分',
+        cost: '₩60,000–₩90,000'
+      }
     }
   ]
 }
-
-];;
+];
