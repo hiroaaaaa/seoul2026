@@ -1,1 +1,1 @@
-const CACHE_NAME = 'seoul-family-2026-v7';
+const CACHE_NAME = 'seoul-family-2026-v8';
