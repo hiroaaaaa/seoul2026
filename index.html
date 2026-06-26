@@ -76,12 +76,16 @@ function cardHTML(c){
     : `<button class="btn uber" onclick="openUber('${c.to}')">開 Uber App</button>`;
 
   // =========================
-  // 🚇 交通詳細資訊（新增，不破壞原本）
+  // 🚇 地鐵資訊（保留原本 + 強化顯示）
   // =========================
-  let transportDetail = '';
+  let metroBlock = '';
+
+  if (c.metro) {
+    metroBlock += `<div class="metro">🚇 ${c.metro}</div>`;
+  }
 
   if (c.metroDetail) {
-    transportDetail += `
+    metroBlock += `
       <div class="transport-detail">
         <div>📍 路線：${c.metroDetail.route || '-'}</div>
         <div>🔁 轉乘：${c.metroDetail.transfer ?? '-'}</div>
@@ -91,8 +95,13 @@ function cardHTML(c){
     `;
   }
 
+  // =========================
+  // 🚕 計程車資訊
+  // =========================
+  let taxiBlock = '';
+
   if (c.taxiDetail) {
-    transportDetail += `
+    taxiBlock = `
       <div class="transport-detail taxi">
         <div>🚕 時間：${c.taxiDetail.time || '-'}</div>
         <div>💰 費用：${c.taxiDetail.cost || '-'}</div>
@@ -107,18 +116,22 @@ function cardHTML(c){
       <h3>${c.title}</h3>
 
       <div class="grid">
+
         <div class="option">
           <h4>🚇 地鐵／步行</h4>
           <div class="route">${c.metro}</div>
 
-          ${transportDetail}
+          ${metroBlock}
         </div>
 
         <div class="option">
           <h4>🚕 叫車</h4>
           <div class="route">${c.taxi}</div>
           <div class="small">目的地：${p.ko}｜集合點：${p.meet}</div>
+
+          ${taxiBlock}
         </div>
+
       </div>
 
       <div class="copybox" id="${c.to}Text">
@@ -126,11 +139,22 @@ function cardHTML(c){
       </div>
 
       <div class="buttons">
-        <a class="btn" href="${naver(p)}" target="_blank" rel="noopener">Naver Map</a>
-        <a class="btn kakao" href="${kakao(p)}" target="_blank" rel="noopener">KakaoMap</a>
+
+        <a class="btn" href="${naver(p)}" target="_blank" rel="noopener">
+          Naver Map
+        </a>
+
+        <a class="btn kakao" href="${kakao(p)}" target="_blank" rel="noopener">
+          KakaoMap
+        </a>
+
         ${googleBtn}
         ${uberBtn}
-        <button class="btn copy" onclick="copyText('${c.to}Text')">複製地址</button>
+
+        <button class="btn copy" onclick="copyText('${c.to}Text')">
+          複製地址
+        </button>
+
       </div>
 
     </article>
