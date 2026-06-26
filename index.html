@@ -44,7 +44,79 @@ function uberScheme(p){return `uber://riderequest?pickup=my_location&dropoff[lat
 function naver(p){return `https://map.naver.com/p/search/${enc(p.ko+' '+p.addr)}`}
 function kakao(p){return `https://map.kakao.com/link/search/${enc(p.ko+' '+p.addr)}`}
 function openUber(key){const p=places[key]; if(!p||p.noUber){copyRaw(p?placeCopy(p):key); showToast('已複製目的地，請用地圖開啟'); return;} copyRaw(placeCopy(p)); const u=uberScheme(p); const fallback=uberUniversal(p); showToast('已複製目的地，嘗試開 Uber App'); window.location.href=u; setTimeout(()=>{ if(!document.hidden) window.location.href=fallback; },1100);}
-function cardHTML(c){const p=places[c.to]; const cls=c.cls||''; const googleBtn=p.google?`<a class="btn google" href="${p.google}" target="_blank" rel="noopener">Google Maps</a>`:''; const uberBtn=p.noUber?'':`<button class="btn uber" onclick="openUber('${c.to}')">開 Uber App</button>`; return `<article class="card ${cls}"><h3>${c.title}</h3><div class="grid"><div class="option"><h4>🚇 地鐵／步行</h4><div class="route">${c.metro}</div></div><div class="option"><h4>🚕 叫車</h4><div class="route">${c.taxi}</div><div class="small">目的地：${p.ko}｜集合點：${p.meet}</div></div></div><div class="copybox" id="${c.to}Text">${placeCopy(p)}</div><div class="buttons"><a class="btn" href="${naver(p)}" target="_blank" rel="noopener">Naver Map</a><a class="btn kakao" href="${kakao(p)}" target="_blank" rel="noopener">KakaoMap</a>${googleBtn}${uberBtn}<button class="btn copy" onclick="copyText('${c.to}Text')">複製地址</button></div></article>`}
+function cardHTML(c){
+  const p = places[c.to];
+  const cls = c.cls || '';
+
+  const googleBtn = p.google
+    ? `<a class="btn google" href="${p.google}" target="_blank" rel="noopener">Google Maps</a>`
+    : '';
+
+  const uberBtn = p.noUber
+    ? ''
+    : `<button class="btn uber" onclick="openUber('${c.to}')">開 Uber App</button>`;
+
+  // =========================
+  // 🚇 交通詳細資訊（新增，不破壞原本）
+  // =========================
+  let transportDetail = '';
+
+  if (c.metroDetail) {
+    transportDetail += `
+      <div class="transport-detail">
+        <div>📍 路線：${c.metroDetail.route || '-'}</div>
+        <div>🔁 轉乘：${c.metroDetail.transfer ?? '-'}</div>
+        <div>⏱ 時間：${c.metroDetail.time || '-'}</div>
+        <div>💰 票價：${c.metroDetail.fare || '-'}</div>
+      </div>
+    `;
+  }
+
+  if (c.taxiDetail) {
+    transportDetail += `
+      <div class="transport-detail taxi">
+        <div>🚕 時間：${c.taxiDetail.time || '-'}</div>
+        <div>💰 費用：${c.taxiDetail.cost || '-'}</div>
+        <div>📍 備註：${c.taxiDetail.note || '-'}</div>
+      </div>
+    `;
+  }
+
+  return `
+    <article class="card ${cls}">
+
+      <h3>${c.title}</h3>
+
+      <div class="grid">
+        <div class="option">
+          <h4>🚇 地鐵／步行</h4>
+          <div class="route">${c.metro}</div>
+
+          ${transportDetail}
+        </div>
+
+        <div class="option">
+          <h4>🚕 叫車</h4>
+          <div class="route">${c.taxi}</div>
+          <div class="small">目的地：${p.ko}｜集合點：${p.meet}</div>
+        </div>
+      </div>
+
+      <div class="copybox" id="${c.to}Text">
+        ${placeCopy(p)}
+      </div>
+
+      <div class="buttons">
+        <a class="btn" href="${naver(p)}" target="_blank" rel="noopener">Naver Map</a>
+        <a class="btn kakao" href="${kakao(p)}" target="_blank" rel="noopener">KakaoMap</a>
+        ${googleBtn}
+        ${uberBtn}
+        <button class="btn copy" onclick="copyText('${c.to}Text')">複製地址</button>
+      </div>
+
+    </article>
+  `;
+}
 function render(){document.getElementById('pageTitle').textContent=siteInfo.title;document.title=siteInfo.title;document.getElementById('pageSubtitle').textContent=`版本：${siteInfo.version}｜${siteInfo.label}｜${siteInfo.subtitle}`;document.getElementById('pageFooter').textContent=`版本：${siteInfo.version}｜${siteInfo.label}｜${siteInfo.footerNote}`;let html=''; days.forEach((d,i)=>{html+=`<section class="day" id="day${i+1}"><h2>${d.day}</h2><div class="summary"><b>動線：</b>${d.summary}</div>${d.cards.map(cardHTML).join('')}</section>`}); document.getElementById('cards').innerHTML=html;}
 function copyRaw(text){navigator.clipboard&&navigator.clipboard.writeText(text).catch(()=>{});}
 function copyText(id){const el=document.getElementById(id);const text=el?el.innerText:id; if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>showToast('已複製')).catch(()=>fallbackCopy(text));}else fallbackCopy(text)}
