@@ -1,12 +1,13 @@
 const siteInfo = {
-  version: '2026-06-26 v3.1',
-  label: '交通細節升級版（含完整轉乘＋費用）',
+  version: '2026-06-27 v3.0',
+  label: '動線優化｜聖水COEX版＋首爾站補貨整合',
   title: '首爾親子行程｜手機交通卡',
   subtitle: '4大3小｜住宿：弘大／麻浦',
-  footerNote: '交通與費用為估算，實際以 Naver Map / 現場為準。'
+  footerNote: '非精準票價，現場以 Naver Map / KakaoMap / 車資 App 為準。'
 };
 
 const places = {
+
   hotel: {
     name: '住宿（弘大／麻浦）',
     ko: '서울 마포구 양화로23길 16-5',
@@ -25,22 +26,22 @@ const places = {
     meet: '出口'
   },
 
-  incheonT2: {
-    name: '仁川機場 T2',
-    ko: '인천국제공항 제2여객터미널',
-    addr: 'Incheon Airport Terminal 2',
-    lat: 37.46890,
-    lng: 126.43380,
-    meet: '出發大廳'
+  hongdaeExchange: {
+    name: '弘大換錢',
+    ko: '홍대 환전소',
+    addr: '弘大商圈',
+    lat: 37.556,
+    lng: 126.924,
+    meet: '弘大商圈'
   },
 
   day1Food: {
-    name: '弘大補給',
-    ko: '홍대',
-    addr: '弘大商圈',
-    lat: 37.556,
-    lng: 126.923,
-    meet: '弘大商圈'
+    name: '쟁반집8292',
+    ko: '쟁반집8292 홍대점',
+    addr: '서울 마포구 서교동 330-16',
+    lat: 37.55422,
+    lng: 126.92294,
+    meet: '店門口'
   },
 
   standardBread: {
@@ -52,35 +53,35 @@ const places = {
     meet: '店門口'
   },
 
-  myeongdongShinsegae: {
-    name: '明洞新世界百貨',
-    ko: '신세계백화점 본점',
-    addr: '서울 중구 소공로 63',
-    lat: 37.56014,
-    lng: 126.98040,
-    meet: '百貨入口'
-  },
-
-  waDaeGang: {
-    name: '大瓦房醬蟹（主）',
-    ko: '대가방',
-    addr: '新世界百貨餐廳樓層',
-    lat: 37.56014,
-    lng: 126.98040,
-    meet: '餐廳'
-  },
-
-  udari: {
-    name: '烏達里醬蟹（備案）',
-    ko: '우다리',
-    addr: '明洞附近',
-    lat: 37.561,
-    lng: 126.983,
+  lowkeyCafe: {
+    name: 'LOWKEY Coffee',
+    ko: 'LOWKEY',
+    addr: '聖水',
+    lat: 37.545,
+    lng: 127.054,
     meet: '店門口'
   },
 
+  eungdongMinari: {
+    name: '능동미나리',
+    ko: '능동미나리',
+    addr: '首爾',
+    lat: 37.548,
+    lng: 127.056,
+    meet: '店門口'
+  },
+
+  starfield: {
+    name: 'COEX 星空圖書館',
+    ko: '별마당도서관',
+    addr: 'COEX',
+    lat: 37.51003,
+    lng: 127.06020,
+    meet: 'COEX入口'
+  },
+
   dongA: {
-    name: '東大門玩具街',
+    name: '昌信洞玩具街',
     ko: '동아완구',
     addr: '서울 종로구 종로52길 5',
     lat: 37.57155,
@@ -98,7 +99,7 @@ const places = {
   },
 
   nyunyu: {
-    name: 'NYUNYU 東大門',
+    name: 'NYUNYU',
     ko: 'NYUNYU',
     addr: '동대문',
     lat: 37.56862,
@@ -145,7 +146,7 @@ const places = {
   crabWorld: {
     name: '花蟹世界',
     ko: '꽃게나라',
-    addr: 'Google Maps定位',
+    addr: 'Google Maps',
     google: 'https://maps.app.goo.gl/MLtG4quMSr8ktWqeA',
     meet: '店門口'
   }
@@ -156,143 +157,43 @@ const days = [
   day: 'Day 1｜抵達弘大',
   summary: '機場 → 弘大',
   cards: [
-    {
-      cls: 'airport',
-      to: 'hotel',
-      title: '✈️ 仁川 → 弘大',
-      metro: 'AREX直達 55–60分',
-      metroDetail: {
-        route: '仁川T2 → 弘大入口站',
-        transfer: 0,
-        time: '55–60分',
-        fare: '₩4,500–₩9,500'
-      },
-      taxiDetail: {
-        time: '50–70分',
-        cost: '₩60,000–₩90,000',
-        note: '7人建議Van'
-      }
-    }
+    { cls:'airport', to:'hotel', title:'✈️ 仁川 → 弘大' }
   ]
 },
-
 {
-  day: 'Day 2｜聖水＋明洞＋醬蟹',
-  summary: '聖水 → 明洞 → 醬蟹',
-
+  day: 'Day 2｜聖水＋COEX',
+  summary: '聖水 → COEX',
   cards: [
-    {
-      cls: '',
-      to: 'standardBread',
-      title: '☕ 弘大 → 聖水',
-
-      metro: '2號線直達（0轉乘）',
-      metroDetail: {
-        route: '弘大入口站 → 聖水站',
-        transfer: 0,
-        time: '25–35分',
-        fare: '₩1,400–₩1,800'
-      },
-      taxiDetail: {
-        time: '20–30分',
-        cost: '₩15,000–₩25,000'
-      }
-    },
-
-    {
-      cls: '',
-      to: 'myeongdongShinsegae',
-      title: '🏙 聖水 → 明洞',
-
-      metro: '2號線直達（0轉乘）',
-      metroDetail: {
-        route: '聖水站 → 乙支路入口站',
-        transfer: 0,
-        time: '20–30分',
-        fare: '₩1,400–₩1,800'
-      },
-      taxiDetail: {
-        time: '25–40分',
-        cost: '₩20,000–₩35,000'
-      }
-    },
-
-    {
-      cls: 'food',
-      to: 'waDaeGang',
-      title: '🦀 大瓦房醬蟹（主）',
-
-      metro: '步行5–8分',
-      metroDetail: {
-        route: '乙支路入口站 → 新世界百貨',
-        transfer: 0,
-        time: '5–8分',
-        fare: '₩0'
-      },
-      taxiDetail: {
-        note: '明洞不建議叫車'
-      }
-    }
+    { cls:'', to:'standardBread', title:'☕ Standard Bread' },
+    { cls:'', to:'lowkeyCafe', title:'☕ LOWKEY' },
+    { cls:'food', to:'eungdongMinari', title:'🍜 午餐' },
+    { cls:'', to:'starfield', title:'📚 COEX' },
+    { cls:'food', to:'hotel', title:'🥓 弘大晚餐' }
   ]
 },
-
 {
   day: 'Day 3｜東大門＋採買',
-  summary: '玩具街 → 廣藏 → NYUNYU → Mango Busy → 樂天超市',
-
+  summary: '玩具街 → 廣藏 → NYUNYU → 樂天超市',
   cards: [
-    { cls: '', to: 'dongA', title: '🧸 玩具街' },
-    { cls: '', to: 'gwangjang', title: '🍜 廣藏市場' },
-    { cls: '', to: 'nyunyu', title: '🛍 NYUNYU' },
-    { cls: 'food', to: 'mangoBusy', title: '🛍 Mango Busy' },
-    {
-      cls: 'food',
-      to: 'seoulStationLotteMart',
-      title: '🛒 首爾站樂天超市',
-      metro: '東大門 → 首爾站 10–15分',
-      metroDetail: {
-        route: '東大門 → 首爾站',
-        transfer: 0,
-        time: '10–15分',
-        fare: '₩1,400–₩1,800'
-      }
-    }
+    { cls:'', to:'dongA', title:'🧸 玩具街' },
+    { cls:'food', to:'gwangjang', title:'🍜 廣藏市場' },
+    { cls:'', to:'nyunyu', title:'🛍 NYUNYU' },
+    { cls:'food', to:'seoulStationLotteMart', title:'🛒 首爾站樂天超市' }
   ]
 },
-
 {
   day: 'Day 4｜樂天世界',
   summary: '全天樂園',
   cards: [
-    { cls: 'long', to: 'lotteWorld', title: '🎢 樂天世界' },
-    {
-      cls: 'food',
-      to: 'lotteMall',
-      title: '🍽 B1醬蟹備註'
-    }
+    { cls:'long', to:'lotteWorld', title:'🎢 樂天世界' },
+    { cls:'food', to:'lotteMall', title:'🍽 Mall備案' }
   ]
 },
-
 {
   day: 'Day 5｜返台',
-  summary: 'CI161 12:45 → 機場',
+  summary: '機場',
   cards: [
-    {
-      cls: 'airport',
-      to: 'incheonT2',
-      title: '✈️ 弘大 → 機場',
-      metro: 'AREX 55–60分',
-      metroDetail: {
-        route: '弘大入口站 → 仁川T2',
-        transfer: 0,
-        time: '55–60分',
-        fare: '₩4,500–₩9,500'
-      },
-      taxiDetail: {
-        time: '50–70分',
-        cost: '₩60,000–₩90,000'
-      }
-    }
+    { cls:'airport', to:'hotel', title:'✈️ 回程' }
   ]
 }
 ];
