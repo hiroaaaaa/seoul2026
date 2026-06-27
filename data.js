@@ -1,5 +1,5 @@
 const siteInfo = {
-  version: '2026-06-27 v3.2',
+  version: '2026-06-27 v3.3',
   label: '交通修復版｜cards交通完整恢復',
   title: '首爾親子行程｜手機交通卡',
   subtitle: '4大3小｜住宿：弘大／麻浦',
@@ -174,7 +174,7 @@ const days = [
   cards: [
     { cls:'', to:'standardBread', title:'☕ Standard Bread', metro:'弘大→聖水約25–35分', taxi:'約20–30分' },
     { cls:'', to:'lowkeyCafe', title:'☕ LOWKEY', metro:'聖水區內步行', taxi:'短程' },
-    { cls:'food', to:'eungdongMinari', title:'🍜 午餐', metro:'聖水→店約10–15分', taxi:'10–15分' },
+    { cls:'food', to:'eungdongMinari', title:'🍜 午餐：능동미나리 陵洞水芹菜', metro:'聖水→店約10–15分', taxi:'10–15分' },
     { cls:'', to:'starfield', title:'📚 COEX', metro:'聖水→三成約15–20分', taxi:'15–25分' },
     { cls:'food', to:'hotel', title:'🥓 弘大晚餐', metro:'COEX→弘大約50–60分', taxi:'40–60分' }
   ]
